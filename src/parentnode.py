@@ -13,4 +13,9 @@ class ParentNode(HTMLNode):
             html_children = ""
         else:
             html_children = "".join([child.to_html() for child in self.children])
-        return f'<{self.tag}>{html_children}</{self.tag}>'
+
+        if self.props is None:
+            return f'<{self.tag}>{html_children}</{self.tag}>'
+        else:
+            props_string = self.props_to_html()
+            return f'<{self.tag}{props_string}>{html_children}</{self.tag}>'
