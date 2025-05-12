@@ -1,12 +1,13 @@
 from enum import Enum
+from leafnode import LeafNode
 
 class TextType(Enum):
-    NORMAL = ""
+    TEXT = ""
     BOLD = "**"
     ITALIC = "_"
     CODE = "`"
     LINKS = ""
-    Images = "  "
+    IMAGE = "  "
 
 class TextNode():
     def __init__(self, text, text_type, url = None):
@@ -22,4 +23,9 @@ class TextNode():
 
     def __repr__(self):
         return f"TextNode({self.text}, {self.text_type}, {self.url})"
-    
+
+    def text_node_to_html_node(self):
+        if self.text_type == TextType.TEXT or self.text_type == TextType.LINKS:
+            return LeafNode(None, self.text)
+        else:
+            return f"{self.text_type.value}{self.text}{self.text_type.value}"
